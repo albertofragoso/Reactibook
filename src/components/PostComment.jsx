@@ -8,14 +8,14 @@ const Postcomment = () => (
     </div>
     <div className="form-group">
       <select className="form-control" name="type">
-        <option value="">Who want to share your post with?</option>
-        <option value="friends">👨‍👩‍👧‍👦</option>
-        <option value="public">🌎</option>
+        <option disable selected>Who want to share your post with?</option>
+        <option value="friends">👨‍👩‍👧‍👦 Friends</option>
+        <option value="public">🌎 Public</option>
       </select>
     </div>
     <div className="custom-file mb-3">
-      <input type="file" className="custom-file-input" />
-      <label className="custom-file-label" htmlFor="customFile">Image 📸</label>
+      <input type="file" className="custom-file-input" name="photo" />
+      <label className="custom-file-label" htmlFor="customFile">📸 Image</label>
     </div>
     <div className="text-right">
       <button className="btn btn-primary">Share</button>
