@@ -1,0 +1,7 @@
+.Timeline{
+  width: 500px;
+}
+
+.Timeline-view span{
+  cursor: pointer;
+}

@@ -1,0 +1,19 @@
+.Comments-cover{
+  min-height: 200px;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-position: center center;
+  position: relative !important;
+  object-fit: cover;
+}
+
+.Comments-cover span {
+  font-size: 18px;
+  object-fit: cover;
+  border-radius: 100%;
+  position: absolute;
+  top: 10px;
+  bottom: 0;
+  right: 10px;
+  z-index: 5;
+}
