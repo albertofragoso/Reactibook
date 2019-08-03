@@ -49,7 +49,7 @@ module.exports = {
     historyApiFallback: true,
   },
   plugins: [
-    new htmlWebPackPlugin({
+    new HtmlWebPackPlugin({
       template: './public/index.html',
       filename: './index.html'
     })
