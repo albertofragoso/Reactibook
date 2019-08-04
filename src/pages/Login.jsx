@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { auth } from '../utils/firebase'
+import { connect } from 'react-redux'
+import { setUser } from '../actions'
 
 import './styles/Login.css'
 
@@ -21,7 +23,7 @@ const Login = props => {
     if(!errorEmail && !errorPassword) {
       auth().signInWithEmailAndPassword(email, password)
         .then(({ user }) => {
-          console.log(user)
+          props.setUser(user)
           props.history.push('/timeline')
         })
         .catch(err => console.log(err))
@@ -59,4 +61,8 @@ const Login = props => {
   )
 }
 
-export default Login
+const mapDispatchToProps = {
+  setUser,
+}
+
+export default connect(null, mapDispatchToProps)(Login)

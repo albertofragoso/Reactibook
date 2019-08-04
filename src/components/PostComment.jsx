@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { storage, database } from '../utils/firebase'
+import { connect } from 'react-redux'
 import toastr from 'toastr'
 
-const Postcomment = () => {
+const Postcomment = props => {
 
   const [commentPhoto, setCommentPhoto] = useState('')
 
@@ -16,7 +17,7 @@ const Postcomment = () => {
       'date': newDate,
       'image': commentPhoto,
       'type': form.get('type'),
-      'user': ''
+      'user': props.user.email
     }
 
     database.ref('comments').push(data)
@@ -63,4 +64,6 @@ const Postcomment = () => {
   )
 }
 
-export default Postcomment
+const mapStateToProps = state => ({ user: state.user })
+
+export default connect(mapStateToProps)(Postcomment)
