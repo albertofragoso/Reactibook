@@ -21,6 +21,7 @@
   "homepage": "https://github.com/albertofragoso/Reactibook#readme",
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "classnames": "^2.2.6",
     "firebase": "^6.3.4",
     "moment": "^2.24.0",
     "react": "^16.8.6",
