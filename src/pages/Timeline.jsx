@@ -1,14 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PostComment from '../components/PostComment'
 import Comment from '../components/Comment'
-import useGetComments from '../hooks'
+import { connect } from 'react-redux'
+import { getComments } from '../actions'
 
 const API = 'https://us-central1-reactibook-84a0d.cloudfunctions.net/api'
 
 import './styles/Timeline.css'
 
-const Timeline = () => {
-  const comments = useGetComments(API).sort((a, b) => a.date < b.date ? 1 : a.date > b.date ? -1 : 0)
+const Timeline = props => {
+  
+  useEffect(() => {
+    fetch(API)
+      .then(response => response.json())
+      .then(data => props.getComments(data))
+      .catch(err => err)
+  }, [])
 
   return(
     <div className="Timeline mx-auto mt-3 mb-5">
@@ -22,11 +29,19 @@ const Timeline = () => {
       </div>
       <div className="comments">
         {
-          comments.map((comment, index) => <Comment comment={comment} key={`comment-${index}`} />)
+          !props.comments 
+           ? <p className="text-center font-weight-light">Loading...</p>
+           : props.comments.sort((a, b) => a.date < b.date ? 1 : a.date > b.date ? -1 : 0).map((comment, index) => <Comment comment={comment} key={`comment-${index}`} />)
         }
       </div>
     </div>
   )
 }
 
-export default Timeline
+const mapStateToProps = state => ({ comments: state.comments })
+
+const mapDispatchToProps = {
+  getComments,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Timeline)

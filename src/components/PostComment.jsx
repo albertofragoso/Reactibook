@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { storage, database } from '../utils/firebase'
 import { connect } from 'react-redux'
+import { setComments } from '../actions'
 import toastr from 'toastr'
 
 const Postcomment = props => {
@@ -24,6 +25,7 @@ const Postcomment = props => {
       .then(() => toastr.success('Nice! Your comment has been published'))
       .catch(() => toastr.error('Something went wrong'))
 
+    props.setComments([...props.comments, data])
     e.target.reset()
   }
 
@@ -64,6 +66,10 @@ const Postcomment = props => {
   )
 }
 
-const mapStateToProps = state => ({ user: state.user })
+const mapStateToProps = state => ({ user: state.user, comments: state.comments })
 
-export default connect(mapStateToProps)(Postcomment)
+const mapDispatchToProps = {
+  setComments,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Postcomment)
