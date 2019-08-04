@@ -8,7 +8,7 @@ const Postcomment = () => (
     </div>
     <div className="form-group">
       <select className="form-control" name="type">
-        <option disable selected>Who want to share your post with?</option>
+        <option value="">Who want to share your post with?</option>
         <option value="friends">👨‍👩‍👧‍👦 Friends</option>
         <option value="public">🌎 Public</option>
       </select>

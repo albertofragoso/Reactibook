@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { auth } from '../utils/firebase'
 
+import './styles/Login.css'
+
 const Login = props => {
 
   const [form, setForm] = useState({ email: '', password: '', errorEmail: null, errorPassword: null })
@@ -26,39 +28,34 @@ const Login = props => {
     } else { console.log(form) }
   }
 
-  // const signup = e => {
-  //   e.preventDefault()
-  //   const { email, password } = form
-  //   auth().createUserWithEmailAndPassword(email, password)
-  //     .then(({ user }) => console.log(user))
-  //     .catch(err => console.log(err))
-  // }
-
-  return(
-    <form>
-      <div className="form-group">
-        <label>Email: </label>
-        <input 
-          className="form-control"
-          type="email" 
-          name="email"
-          onChange={handleChange} 
-        />
-        {form.errorEmail && <small className="text-danger">{form.errorEmail}</small>}
+  return (
+    <div className="Login">
+      <div className="Login-form mx-auto mt-5" >
+      <form>
+        <div className="form-group">
+          <label>Email: </label>
+          <input 
+            className="form-control"
+            type="email" 
+            name="email"
+            onChange={handleChange} 
+          />
+          {form.errorEmail && <small className="text-danger">{form.errorEmail}</small>}
+        </div>
+        <div className="form-group">
+          <label>Password: </label>
+          <input 
+            className="form-control" 
+            type="password" 
+            name="password" 
+            onChange={handleChange}
+          />
+          {form.errorPassword && <small className="text-danger">{form.errorPassword}</small>}
+        </div>
+        <button onClick={login} className="btn btn-primary">Login</button>
+      </form>
       </div>
-
-      <div className="form-group">
-        <label>Password: </label>
-        <input 
-          className="form-control" 
-          type="password" 
-          name="password" 
-          onChange={handleChange}
-        />
-        {form.errorPassword && <small className="text-danger">{form.errorPassword}</small>}
-      </div>
-      <button onClick={login} className="btn btn-primary">Login</button>
-    </form>
+    </div>
   )
 }
 

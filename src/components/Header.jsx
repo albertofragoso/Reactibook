@@ -1,14 +1,28 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { auth } from '../utils/firebase'
 
 import './styles/Header.css'
 
-const Header = () => (
-  <div className="Header">
-    <div className="container-fluid">
-        <span className="font-weight-bold">{`< Reactibook >`}</span>
+const Header = props => {
+
+  const logout = () => {
+    // auth().signOut()
+    //   .then(() => props.history.push('/'))
+    props.history.push('/')
+  }
+
+  return(
+    <div className="Header">
+      <div className="container-fluid d-flex justify-content-between">
+        <div>
+          <span className="font-weight-bold">{`< Reactibook >`}</span>
+        </div>
+        <div>
+          <button onClick={logout} className="btn btn-danger">Logout</button>
+        </div>
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 export default Header

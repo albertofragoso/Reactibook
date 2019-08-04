@@ -4,7 +4,7 @@ import Comments from '../components/Comments'
 
 import './styles/Timeline.css'
 
-const Timeline = () => (
+const Timeline = props => (
   <div className="Timeline mx-auto mt-5 mb-5">
     <div className="Timeline-postcomment ">
       <PostComment />
