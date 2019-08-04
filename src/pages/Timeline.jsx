@@ -22,9 +22,7 @@ const Timeline = () => {
       </div>
       <div className="comments">
         {
-          comments.map((comment, index) => 
-            <Comment comment={comment} key={`commetn-${index}`} />
-          )
+          comments.map((comment, index) => <Comment comment={comment} key={`comment-${index}`} />)
         }
       </div>
     </div>
