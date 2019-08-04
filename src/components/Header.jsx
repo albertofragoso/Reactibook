@@ -6,9 +6,8 @@ import './styles/Header.css'
 const Header = props => {
 
   const logout = () => {
-    // auth().signOut()
-    //   .then(() => props.history.push('/'))
-    props.history.push('/')
+    auth().signOut()
+      .then(() => props.history.push('/'))
   }
 
   return(

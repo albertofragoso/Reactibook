@@ -1,4 +1,4 @@
-.Comments-cover{
+.Comment-cover{
   min-height: 200px;
   background-repeat: no-repeat !important;
   background-size: cover !important;
@@ -7,7 +7,7 @@
   object-fit: cover;
 }
 
-.Comments-cover span {
+.Comment-cover span {
   font-size: 18px;
   object-fit: cover;
   border-radius: 100%;
