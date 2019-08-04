@@ -1,11 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { auth } from '../utils/firebase'
 import { connect } from 'react-redux'
-import { setUser } from '../actions'
+import { setUser, setLogin } from '../actions'
 
 import './styles/Login.css'
 
 const Login = props => {
+
+  useEffect(() => {
+    if(props.login) props.history.push('/timeline')
+  }, [])
 
   const [form, setForm] = useState({ email: '', password: '', errorEmail: null, errorPassword: null })
 
@@ -24,6 +28,7 @@ const Login = props => {
       auth().signInWithEmailAndPassword(email, password)
         .then(({ user }) => {
           props.setUser(user)
+          props.setLogin(true)
           props.history.push('/timeline')
         })
         .catch(err => console.log(err))
@@ -61,8 +66,11 @@ const Login = props => {
   )
 }
 
+const mapStateToProps = state => ({ login: state.login })
+
 const mapDispatchToProps = {
   setUser,
+  setLogin
 }
 
-export default connect(null, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

@@ -11,6 +11,8 @@ import './styles/Timeline.css'
 const Timeline = props => {
   
   useEffect(() => {
+    if(!props.login) props.history.push('/')
+    
     fetch(API)
       .then(response => response.json())
       .then(data => props.getComments(data))
@@ -38,7 +40,7 @@ const Timeline = props => {
   )
 }
 
-const mapStateToProps = state => ({ comments: state.comments })
+const mapStateToProps = state => ({ comments: state.comments, login: state.login })
 
 const mapDispatchToProps = {
   getComments,

@@ -14,7 +14,9 @@ const Header = props => {
     <div className="Header">
       <div className="container-fluid d-flex justify-content-between">
         <div>
-          <span className="font-weight-bold">{`< Reactibook >`}</span>
+          {/* <Link to="/"> */}
+            <span className="font-weight-bold">{`< Reactibook >`}</span>
+          {/* </Link> */}
         </div>
         <div>
           <button onClick={logout} className="btn btn-danger">Logout</button>

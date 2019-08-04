@@ -1,11 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Login from '../pages/Login'
 import Timeline from '../pages/Timeline'
+import { connect } from 'react-redux'
+import { setLogin, setUser } from '../actions'
+import { auth } from '../utils/firebase'
 
-const App = () =>  {
+const App = props =>  {
+
+  useEffect(() => {
+    auth().onAuthStateChanged(user => {
+      if(user) {
+        props.setUser(user)
+        props.setLogin(true)
+      }
+    })
+  }, [])
+
   return (
     <BrowserRouter>
       <Header />
@@ -19,4 +32,9 @@ const App = () =>  {
   )
 }
 
-export default App
+const mapDispatchToProps = {
+  setLogin, 
+  setUser
+}
+
+export default connect(null, mapDispatchToProps)(App)

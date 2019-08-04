@@ -3,6 +3,11 @@ export const setUser = payload => ({
   payload,
 })
 
+export const setLogin = payload => ({
+  type: 'SET_LOGIN',
+  payload
+})
+
 export const getComments = payload => ({
   type: 'GET_COMMENTS',
   payload,
