@@ -12,8 +12,10 @@ const Postcomment = props => {
     e.preventDefault()
     const form = new FormData(e.target)
     const newDate = new Date().toISOString()
+    const id = new Date().getTime()
 
     const data = {
+      'id': id,
       'comment': form.get('comment'),
       'date': newDate,
       'image': commentPhoto,
@@ -21,7 +23,7 @@ const Postcomment = props => {
       'user': props.user.email
     }
 
-    database.ref('comments').push(data)
+    database.ref('comments/'+id).set(data)
       .then(() => toastr.success('Nice! Your comment has been published'))
       .catch(() => toastr.error('Something went wrong'))
 

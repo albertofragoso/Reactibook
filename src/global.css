@@ -18,7 +18,6 @@ a.link-unstyled:hover{
 
 .btn.btn-primary {
   color: #fff;
-  font-weight: 700;
   background-color: #ffd73e;
   border-color: #ffd73e;
 }
@@ -39,24 +38,24 @@ a.link-unstyled:hover{
   box-shadow: 0 0 0 0.2rem #ffd73e;
 }
 
-.btn.btn-danger {
+.btn.btn-secondary {
   color: #fff;
   background-color: #54cd82;
   border-color: #54cd82;
 }
 
-.btn.btn-danger:not(:disabled):not(.disabled):hover {
+.btn.btn-secondary:not(:disabled):not(.disabled):hover {
   color: #fff;
   background-color: #54cd82;
   border-color: #54cd82;
 }
 
-.btn.btn-danger:not(:disabled):not(.disabled):active {
+.btn.btn-secondary:not(:disabled):not(.disabled):active {
   color: #fff;
   background-color: #54cd82;
   border-color: #54cd82;
 }
 
-.btn.btn-danger:not(:disabled):not(.disabled):focus {
+.btn.btn-secondary:not(:disabled):not(.disabled):focus {
   box-shadow: 0 0 0 0.2rem #54cd82;
 }
