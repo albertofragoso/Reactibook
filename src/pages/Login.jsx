@@ -11,15 +11,16 @@ const Login = props => {
   const [form, setForm] = useState({ email: '', password: '' })
   const [isEmailCorrect, setIsEmailCorrect] = useState(true)
   const [isPasswordCorrect, setIsPasswordCorrect] = useState(true)
+  const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
-  const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value })
+  const handleChange = e => {
+    setForm({ ...form, [e.target.name]: e.target.value })
+    regex.test(form.email) ? setIsEmailCorrect(true) : setIsEmailCorrect(false)
+  }
 
   const handleLogin = e => {
     e.preventDefault()
     const { email, password } = form
-
-    const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    regex.test(email) ? setIsEmailCorrect(true) : setIsEmailCorrect(false)
     
     password ? setIsPasswordCorrect(true) : setIsPasswordCorrect(false)
 
