@@ -6,8 +6,8 @@ import reducer from './reducers'
 
 import App from './routes/App'
 
-import './global.css'
 import 'bootstrap/dist/css/bootstrap.css'
+import './global.css'
 import 'toastr/build/toastr.css'
 
 const initialState = {}

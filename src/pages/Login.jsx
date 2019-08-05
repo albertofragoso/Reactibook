@@ -18,35 +18,39 @@ const Login = props => {
 
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value })
 
-  const login = e => {
+  const handleLogin = e => {
     e.preventDefault()
     const { email, password } = form
 
     const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    if(!regex.test(email)) setIsEmailCorrect(false)
+    !regex.test(email) ? setIsEmailCorrect(false) : setIsEmailCorrect(true)
     
-    if(!password) setIsPasswordCorrect(false)
+    !password ? setIsPasswordCorrect(false) : setIsPasswordCorrect(true)
 
-    if(!isEmailCorrect && !isPasswordCorrect) {
-      auth().signInWithEmailAndPassword(email, password)
-        .then(({ user }) => {
-          props.setUser(user)
-          props.setLogin(true)
-          toastr.success('Welcome! 😎')
-          props.history.push('/timeline')
-        })
-    } else { toastr.error('Invalid user!') }
+    if(!isEmailCorrect || !isPasswordCorrect) return
+
+    auth().signInWithEmailAndPassword(email, password)
+      .then(({ user }) => {
+        props.setUser(user)
+        props.setLogin(true)
+        toastr.success('Welcome! 😎')
+        props.history.push('/timeline')
+      })
+      .catch(() => {
+        toastr.error('Invalid user!')
+      })
+      e.target.reset()
   }
 
   return (
     <div className="Login">
       <div className="Login-form mx-auto mt-5" >
-      <form>
+      <form onSubmit={handleLogin}>
         <div className="form-group">
           <label>Email: </label>
           <input 
             className="form-control"
-            type="email" 
+            type="text" 
             name="email"
             onChange={handleChange} 
           />
@@ -62,7 +66,7 @@ const Login = props => {
           />
           {!isPasswordCorrect && <small className="text-danger">Incorrect Password</small>}
         </div>
-        <button onClick={login} className="btn btn-primary">Login</button>
+        <button className="btn btn-primary">Login</button>
       </form>
       </div>
     </div>
