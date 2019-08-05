@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { auth } from '../utils/firebase'
 import { connect } from 'react-redux'
 import { setUser, setLogin } from '../actions'
@@ -7,10 +7,6 @@ import toastr from 'toastr'
 import './styles/Login.css'
 
 const Login = props => {
-
-  useEffect(() => {
-    if(props.login) props.history.push('/timeline')
-  }, [])
 
   const [form, setForm] = useState({ email: '', password: '' })
   const [isEmailCorrect, setIsEmailCorrect] = useState(true)
@@ -23,9 +19,9 @@ const Login = props => {
     const { email, password } = form
 
     const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    !regex.test(email) ? setIsEmailCorrect(false) : setIsEmailCorrect(true)
+    regex.test(email) ? setIsEmailCorrect(true) : setIsEmailCorrect(false)
     
-    !password ? setIsPasswordCorrect(false) : setIsPasswordCorrect(true)
+    password ? setIsPasswordCorrect(true) : setIsPasswordCorrect(false)
 
     if(!isEmailCorrect || !isPasswordCorrect) return
 
@@ -47,7 +43,7 @@ const Login = props => {
       <div className="Login-form mx-auto mt-5" >
       <form onSubmit={handleLogin}>
         <div className="form-group">
-          <label>Email: </label>
+          <label>📬 Email: </label>
           <input 
             className="form-control"
             type="text" 
@@ -57,7 +53,7 @@ const Login = props => {
           {!isEmailCorrect && <small className="text-danger">Incorrect Email</small>}
         </div>
         <div className="form-group">
-          <label>Password: </label>
+          <label>🔑 Password: </label>
           <input 
             className="form-control" 
             type="password" 

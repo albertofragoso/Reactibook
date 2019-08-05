@@ -1,6 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { setUser, setLogin } from '../actions'
 import { auth } from '../utils/firebase'
+import { Link } from 'react-router-dom'
+import toastr from 'toastr'
 
 import './styles/Header.css'
 
@@ -8,21 +11,23 @@ const Header = props => {
 
   const logout = () => {
     auth().signOut()
-      .then(() => props.history.push('/'))
+      .then(() => {
+        props.setUser({})
+        props.setLogin(false)
+        toastr.success('Come back soon!')
+      })
   }
 
-  return(
+  return (
     <div className="Header">
       <div className="container-fluid d-flex justify-content-between">
         <div>
-          {/* <Link to="/"> */}
-            <span className="font-weight-bold">{`< Reactibook >`}</span>
-          {/* </Link> */}
+          <span className="font-weight-bold">{`< Reactibook >`}</span>
         </div>
         {
           props.login &&
           <div>
-            <button onClick={logout} className="btn btn-sm btn-secondary">Logout</button>
+            <Link className="btn btn-sm btn-secondary" onClick={logout} to="/">Logout</Link>
           </div>
         }
       </div>
@@ -32,4 +37,9 @@ const Header = props => {
 
 const mapStateToProps = state => ({ login: state.login })
 
-export default connect(mapStateToProps)(Header)
+const mapDispatchToProps = {
+  setUser,
+  setLogin
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)
