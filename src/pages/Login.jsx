@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { auth } from '../utils/firebase'
 import { connect } from 'react-redux'
 import { setUser, setLogin } from '../actions'
+import toastr from 'toastr'
 
 import './styles/Login.css'
 
@@ -11,28 +12,30 @@ const Login = props => {
     if(props.login) props.history.push('/timeline')
   }, [])
 
-  const [form, setForm] = useState({ email: '', password: '', errorEmail: null, errorPassword: null })
+  const [form, setForm] = useState({ email: '', password: '' })
+  const [isEmailCorrect, setIsEmailCorrect] = useState(true)
+  const [isPasswordCorrect, setIsPasswordCorrect] = useState(true)
 
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value })
 
   const login = e => {
     e.preventDefault()
-    const { email, password, errorEmail, errorPassword } = form
+    const { email, password } = form
 
     const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    !regex.test(email) ? setForm({ ...form, errorEmail: 'Invalid email format!' }) : setForm({ ...form, errorEmail: null })
+    if(!regex.test(email)) setIsEmailCorrect(false)
     
-    !password ? setForm({ ...form, errorPassword: 'Password is required!' }) : setForm({ ...form, errorPassword: null })
+    if(!password) setIsPasswordCorrect(false)
 
-    if(!errorEmail && !errorPassword) {
+    if(!isEmailCorrect && !isPasswordCorrect) {
       auth().signInWithEmailAndPassword(email, password)
         .then(({ user }) => {
           props.setUser(user)
           props.setLogin(true)
+          toastr.success('Welcome! 😎')
           props.history.push('/timeline')
         })
-        .catch(err => console.log(err))
-    } else { console.log(form) }
+    } else { toastr.error('Invalid user!') }
   }
 
   return (
@@ -47,7 +50,7 @@ const Login = props => {
             name="email"
             onChange={handleChange} 
           />
-          {form.errorEmail && <small className="text-danger">{form.errorEmail}</small>}
+          {!isEmailCorrect && <small className="text-danger">Incorrect Email</small>}
         </div>
         <div className="form-group">
           <label>Password: </label>
@@ -57,7 +60,7 @@ const Login = props => {
             name="password" 
             onChange={handleChange}
           />
-          {form.errorPassword && <small className="text-danger">{form.errorPassword}</small>}
+          {!isPasswordCorrect && <small className="text-danger">Incorrect Password</small>}
         </div>
         <button onClick={login} className="btn btn-primary">Login</button>
       </form>
