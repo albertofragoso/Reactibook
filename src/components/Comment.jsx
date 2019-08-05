@@ -44,7 +44,7 @@ const Comment = props => {
     e.preventDefault()
 
     database.ref('comments/'+props.comment.id).remove()
-      .then(() => toastr.warning('Your comment has been deleted.'))
+      .then(() => toastr.error('Your comment has been deleted.'))
       .catch(() => toastr.error('Something went wrong'))
 
     const updatedComments = props.comments.filter(comment => comment.id !== props.comment.id)

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import PostComment from '../components/PostComment'
 import Comment from '../components/Comment'
 import { connect } from 'react-redux'
@@ -9,6 +9,8 @@ const API = 'https://us-central1-reactibook-84a0d.cloudfunctions.net/api'
 import './styles/Timeline.css'
 
 const Timeline = props => {
+
+  const [showFriends, setShowFriends] = useState(true)
   
   useEffect(() => {
     if(!props.login) props.history.push('/')
@@ -19,6 +21,8 @@ const Timeline = props => {
       .catch(err => err)
   }, [])
 
+  const handleShow = () => setShowFriends(!showFriends)
+
   return(
     <div className="Timeline mx-auto mt-3 mb-5">
       <div className="Timeline-postcomment ">
@@ -26,14 +30,16 @@ const Timeline = props => {
       </div>
       <hr />
       <div className="Timeline-view mb-1">
-        <span className="mr-2">👨‍👩‍👧‍👦</span>
-        <span>🌎</span>
+        <span onClick={handleShow} className="mr-2">👨‍👩‍👧‍👦</span>
+        <span onClick={handleShow}>🌎</span>
       </div>
       <div className="comments">
         {
           !props.comments 
            ? <p className="text-center font-weight-light">Loading...</p>
-           : props.comments.sort((a, b) => a.date < b.date ? 1 : a.date > b.date ? -1 : 0).map((comment, index) => <Comment comment={comment} key={`comment-${index}`} />)
+           : showFriends
+           ? props.comments.filter(comment => comment.type === 'friends').sort((a, b) => a.date < b.date ? 1 : a.date > b.date ? -1 : 0).map((comment, index) => <Comment comment={comment} key={`comment-${index}`} />)
+           : props.comments.filter(comment => comment.type === 'public').sort((a, b) => a.date < b.date ? 1 : a.date > b.date ? -1 : 0).map((comment, index) => <Comment comment={comment} key={`comment-${index}`} />)
         }
       </div>
     </div>
